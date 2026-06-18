@@ -1,0 +1,96 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C2E867FF-B7BA-4036-961A-520B64A4F99A}|StudentManagementApp.Test\\StudentManagementApp.Test.csproj|c:\\users\\shivang.chauhan\\desktop\\dot net\\claude ai\\practicals\\practical - 35\\practical - 35\\studentmanagementapp.test\\studentservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2E867FF-B7BA-4036-961A-520B64A4F99A}|StudentManagementApp.Test\\StudentManagementApp.Test.csproj|solutionrelative:studentmanagementapp.test\\studentservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB897A7F-F3A5-4720-93DE-CD8757C7F4F6}|StudentManagementApp\\StudentManagementApp.csproj|c:\\users\\shivang.chauhan\\desktop\\dot net\\claude ai\\practicals\\practical - 35\\practical - 35\\studentmanagementapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB897A7F-F3A5-4720-93DE-CD8757C7F4F6}|StudentManagementApp\\StudentManagementApp.csproj|solutionrelative:studentmanagementapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB897A7F-F3A5-4720-93DE-CD8757C7F4F6}|StudentManagementApp\\StudentManagementApp.csproj|c:\\users\\shivang.chauhan\\desktop\\dot net\\claude ai\\practicals\\practical - 35\\practical - 35\\studentmanagementapp\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB897A7F-F3A5-4720-93DE-CD8757C7F4F6}|StudentManagementApp\\StudentManagementApp.csproj|solutionrelative:studentmanagementapp\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB897A7F-F3A5-4720-93DE-CD8757C7F4F6}|StudentManagementApp\\StudentManagementApp.csproj|c:\\users\\shivang.chauhan\\desktop\\dot net\\claude ai\\practicals\\practical - 35\\practical - 35\\studentmanagementapp\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB897A7F-F3A5-4720-93DE-CD8757C7F4F6}|StudentManagementApp\\StudentManagementApp.csproj|solutionrelative:studentmanagementapp\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StudentServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp.Test\\StudentServiceTests.cs",
+              "RelativeDocumentMoniker": "StudentManagementApp.Test\\StudentServiceTests.cs",
+              "ToolTip": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp.Test\\StudentServiceTests.cs",
+              "RelativeToolTip": "StudentManagementApp.Test\\StudentServiceTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T10:30:53.882Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp\\Program.cs",
+              "RelativeDocumentMoniker": "StudentManagementApp\\Program.cs",
+              "ToolTip": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp\\Program.cs",
+              "RelativeToolTip": "StudentManagementApp\\Program.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAqwIkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T10:01:50.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StudentService.cs",
+              "DocumentMoniker": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp\\Services\\StudentService.cs",
+              "RelativeDocumentMoniker": "StudentManagementApp\\Services\\StudentService.cs",
+              "ToolTip": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp\\Services\\StudentService.cs",
+              "RelativeToolTip": "StudentManagementApp\\Services\\StudentService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T10:01:48.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Student.cs",
+              "DocumentMoniker": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp\\Models\\Student.cs",
+              "RelativeDocumentMoniker": "StudentManagementApp\\Models\\Student.cs",
+              "ToolTip": "C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\StudentManagementApp\\Models\\Student.cs",
+              "RelativeToolTip": "StudentManagementApp\\Models\\Student.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T10:01:34.42Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

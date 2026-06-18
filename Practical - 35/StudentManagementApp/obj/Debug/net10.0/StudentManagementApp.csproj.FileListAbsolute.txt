@@ -1,0 +1,14 @@
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\bin\Debug\net10.0\StudentManagementApp.exe
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\bin\Debug\net10.0\StudentManagementApp.deps.json
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\bin\Debug\net10.0\StudentManagementApp.runtimeconfig.json
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\bin\Debug\net10.0\StudentManagementApp.dll
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\bin\Debug\net10.0\StudentManagementApp.pdb
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\StudentManagementApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\StudentManagementApp.AssemblyInfoInputs.cache
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\StudentManagementApp.AssemblyInfo.cs
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\StudentManagementApp.csproj.CoreCompileInputs.cache
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\StudentManagementApp.dll
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\refint\StudentManagementApp.dll
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\StudentManagementApp.pdb
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\StudentManagementApp.genruntimeconfig.cache
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp\obj\Debug\net10.0\ref\StudentManagementApp.dll
