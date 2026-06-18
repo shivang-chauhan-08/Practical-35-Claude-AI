@@ -2,18 +2,18 @@
 
 ## Prompt 1 - Generate Application
 
-Create a complete C# .NET Console Application named Student Management System.
+Create a complete C# .NET Console Application named StudentManagementApp.
 
 Requirements:
 
-Student class:
+Student class  (with Validations) :
 - Id (int)
 - Name (string)
 - Email (string)
 - EnrollmentDate (DateTime)
 - Grade (double)
 
-StudentService class:
+StudentService class (with Validations) :
 - Add(Student student)
 - GetAll()
 - GetById(int id)
@@ -44,7 +44,7 @@ Requirements:
 
 ## Prompt 2 - Generate Tests
 
-Generate xUnit tests for StudentService.
+Generate xUnit tests for StudentService named StudentManagementApp.Test.
 
 Requirements:
 - Use xUnit framework.
