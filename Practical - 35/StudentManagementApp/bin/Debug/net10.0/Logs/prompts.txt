@@ -1,0 +1,81 @@
+---
+[2026-06-19 09:09:39]
+Menu selection: 2
+---
+[2026-06-19 09:09:39]
+View All Students
+---
+[2026-06-19 09:09:56]
+Menu selection: 1
+---
+[2026-06-19 09:10:41]
+Add Student → Name=Shivang Chauhan, Email=shivang@gmail.com, Date=2003-10-08, Grade=99
+---
+[2026-06-19 09:11:28]
+Menu selection: 2
+---
+[2026-06-19 09:11:28]
+View All Students
+---
+[2026-06-19 09:11:39]
+Menu selection: 1
+---
+[2026-06-19 09:12:03]
+Add Student → Name=Bhautik, Email=bhautik@gmail.com, Date=2003-10-10, Grade=33
+---
+[2026-06-19 09:12:05]
+Menu selection: 2
+---
+[2026-06-19 09:12:05]
+View All Students
+---
+[2026-06-19 09:12:21]
+Menu selection: 3
+---
+[2026-06-19 09:12:22]
+Find Student By Id → 1
+---
+[2026-06-19 09:12:26]
+Menu selection: 4
+---
+[2026-06-19 09:12:30]
+Update Grade → StudentId=2, NewGrade=11
+---
+[2026-06-19 09:12:32]
+Menu selection: 2
+---
+[2026-06-19 09:12:32]
+View All Students
+---
+[2026-06-19 09:12:39]
+Menu selection: 5
+---
+[2026-06-19 09:12:41]
+Delete Student → Id=1
+---
+[2026-06-19 09:12:44]
+Menu selection: 2
+---
+[2026-06-19 09:12:44]
+View All Students
+---
+[2026-06-19 09:12:46]
+Menu selection: 5
+---
+[2026-06-19 09:12:48]
+Delete Student → Id=1
+---
+[2026-06-19 09:12:52]
+Menu selection: 5
+---
+[2026-06-19 09:12:54]
+Delete Student → Id=2
+---
+[2026-06-19 09:12:56]
+Menu selection: 2
+---
+[2026-06-19 09:12:56]
+View All Students
+---
+[2026-06-19 09:13:00]
+Menu selection: 6

@@ -1,17 +1,1 @@
-{
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "shell": "powershell",
-            "command": "$inputJson = $input | Out-String; $data = $inputJson | ConvertFrom-Json; $prompt = $data.prompt -replace '[\\r\\n]+', ' '; $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'; $line = \"[$timestamp] $prompt\"; Add-Content -Path 'C:\\Users\\shivang.chauhan\\Desktop\\Dot Net\\Claude AI\\Practicals\\Practical - 35\\Practical - 35\\prompt_logs.txt' -Value $line 2>$null",
-            "statusMessage": "Logging prompt...",
-            "async": true
-          }
-        ]
-      }
-    ]
-  }
-}
+{}

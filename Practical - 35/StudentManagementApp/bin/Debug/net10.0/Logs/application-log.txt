@@ -1,0 +1,24 @@
+[2026-06-19 09:09:39] [Information] Retrieving all students.
+[2026-06-19 09:09:39] [Information] Retrieved 0 student(s).
+[2026-06-19 09:10:41] [Information] Attempting to add student with email: shivang@gmail.com
+[2026-06-19 09:10:41] [Information] Student added successfully. ID: 1, Name: Shivang Chauhan
+[2026-06-19 09:11:28] [Information] Retrieving all students.
+[2026-06-19 09:11:28] [Information] Retrieved 1 student(s).
+[2026-06-19 09:12:03] [Information] Attempting to add student with email: bhautik@gmail.com
+[2026-06-19 09:12:03] [Information] Student added successfully. ID: 2, Name: Bhautik
+[2026-06-19 09:12:05] [Information] Retrieving all students.
+[2026-06-19 09:12:05] [Information] Retrieved 2 student(s).
+[2026-06-19 09:12:22] [Information] Retrieving student with ID: 1
+[2026-06-19 09:12:30] [Information] Updating grade for student ID: 2 to 11
+[2026-06-19 09:12:30] [Information] Grade updated successfully for student ID: 2
+[2026-06-19 09:12:32] [Information] Retrieving all students.
+[2026-06-19 09:12:32] [Information] Retrieved 2 student(s).
+[2026-06-19 09:12:41] [Information] Deleting student with ID: 1
+[2026-06-19 09:12:41] [Information] Student with ID 1 deleted successfully.
+[2026-06-19 09:12:44] [Information] Retrieving all students.
+[2026-06-19 09:12:44] [Information] Retrieved 1 student(s).
+[2026-06-19 09:12:48] [Information] Deleting student with ID: 1
+[2026-06-19 09:12:54] [Information] Deleting student with ID: 2
+[2026-06-19 09:12:54] [Information] Student with ID 2 deleted successfully.
+[2026-06-19 09:12:56] [Information] Retrieving all students.
+[2026-06-19 09:12:56] [Information] Retrieved 0 student(s).

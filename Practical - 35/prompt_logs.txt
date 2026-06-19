@@ -1,7 +1,0 @@
-[2026-06-18 15:32:42] test prompt
-[2026-06-18 15:48:16] here, id should be auto generated, name should only contain characters, email should be validated, enrollment date should be validated(future date should not be accepted), grade must be validated
-[2026-06-18 15:55:14] now create CLAUDE.md file & store & update all the things related to this project. so it can be useful for future
-[2026-06-18 15:59:16] I have already Created a xUnit test named StudentManagementApp.Test. Generate xUnit tests for StudentService. Requirements: Use xUnit framework. Follow Arrange Act Assert pattern. Create at least 5 test cases. Tests should verify: Add student successfully. Get student by id. Get all students. Update grade successfully. Delete student successfully. Provide complete StudentServiceTests.cs code.
-[2026-06-18 16:04:24] Review the generated Student Management System project. Check: Logic errors Null handling Input validation issues Code quality improvements Naming conventions SOLID principles List any improvements and provide corrected code where necessary.
-[2026-06-18 16:14:26] so u have reviewed & made changes. right ?
-[2026-06-18 16:14:46] update CLAUDE.md with the review changes

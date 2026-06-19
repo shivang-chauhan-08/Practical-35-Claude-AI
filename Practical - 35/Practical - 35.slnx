@@ -1,4 +1,7 @@
 <Solution>
-  <Project Path="StudentManagementApp.Test/StudentManagementApp.Test.csproj" />
+  <Project Path="StudentManagementApp.Domain/StudentManagementApp.Domain.csproj" />
+  <Project Path="StudentManagementApp.Application/StudentManagementApp.Application.csproj" />
+  <Project Path="StudentManagementApp.Infrastructure/StudentManagementApp.Infrastructure.csproj" />
   <Project Path="StudentManagementApp/StudentManagementApp.csproj" />
+  <Project Path="StudentManagementApp.Test/StudentManagementApp.Test.csproj" />
 </Solution>

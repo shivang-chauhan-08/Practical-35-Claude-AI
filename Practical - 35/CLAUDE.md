@@ -2,24 +2,22 @@
 
 ## Project Overview
 
-A .NET 10 console application for managing student records using in-memory storage (no database). Menu-driven UI with full CRUD operations and field-level validation.
+A .NET 10 console application for managing student records using in-memory storage (no database). Menu-driven UI with full CRUD operations. Refactored from a single-project structure to a clean 4-layer architecture (Domain → Application → Infrastructure → Presentation).
 
 **Solution:** `Practical - 35.slnx`
-**Main project:** `StudentManagementApp/`
-**Test project:** `StudentManagementApp.Test/`
 
 ---
 
 ## Build & Run
 
 ```bash
-# Build
-dotnet build StudentManagementApp/StudentManagementApp.csproj
+# Build entire solution
+dotnet build "Practical - 35.slnx"
 
-# Run
+# Run the app
 dotnet run --project StudentManagementApp/StudentManagementApp.csproj
 
-# Test
+# Run all tests
 dotnet test StudentManagementApp.Test/StudentManagementApp.Test.csproj
 ```
 
@@ -33,96 +31,170 @@ Nullable enabled, implicit usings enabled.
 ```
 Practical - 35/
 ├── .claude/
-│   └── settings.json                  # Claude Code hook: logs every prompt to prompt_logs.txt
-├── StudentManagementApp/
-│   ├── Models/
-│   │   └── Student.cs                 # Domain model with property-level validation
-│   ├── Services/
-│   │   ├── IStudentService.cs         # Abstraction — Program depends on this, not the concrete class
-│   │   └── StudentService.cs          # CRUD implementation, in-memory List<Student>
-│   ├── Program.cs                     # Menu-driven console UI, input helpers
+│   └── settings.json                          # Claude Code hook: logs every prompt to prompt_logs.txt
+├── StudentManagementApp.Domain/               # Core domain — no dependencies
+│   └── Entities/
+│       ├── BaseEntity.cs                      # Id, CreatedOn, UpdatedOn
+│       └── Student.cs                         # Name, Email, EnrollmentDate, Grade
+├── StudentManagementApp.Application/          # Business logic — depends on Domain only
+│   ├── DTOs/
+│   │   └── StudentDto.cs                      # Data Transfer Object (crosses layer boundaries)
+│   ├── Interfaces/
+│   │   ├── IStudentService.cs                 # Service abstraction (Presentation depends on this)
+│   │   ├── IStudentRepository.cs              # Repository abstraction (Application depends on this)
+│   │   └── IPromptLogger.cs                   # Prompt logging abstraction
+│   ├── Mappings/
+│   │   └── StudentMappingProfile.cs           # AutoMapper: Student ↔ StudentDto
+│   ├── Validators/
+│   │   └── StudentValidator.cs                # FluentValidation rules for StudentDto
+│   └── Services/
+│       └── StudentService.cs                  # Orchestrates validation, mapping, repository calls
+├── StudentManagementApp.Infrastructure/       # Implementations — depends on Domain + Application
+│   ├── Repositories/
+│   │   └── StudentRepository.cs               # In-memory List<Student> with auto-increment IDs
+│   ├── Logging/
+│   │   ├── FileLogger.cs                      # ILogger implementation writing to a .txt file
+│   │   ├── FileLoggerProvider.cs              # ILoggerProvider factory for FileLogger
+│   │   └── PromptLogger.cs                    # IPromptLogger implementation (appends to prompts.txt)
+│   └── DependencyInjection/
+│       └── InfrastructureServiceRegistration.cs  # AddInfrastructure() extension — wires all DI
+├── StudentManagementApp/                      # Presentation (console) — depends on Application + Infrastructure
+│   ├── Program.cs                             # DI setup, menu loop, input helpers
 │   └── StudentManagementApp.csproj
-├── StudentManagementApp.Test/
-│   ├── StudentServiceTests.cs         # 30 xUnit tests (Fact + Theory, AAA pattern)
-│   └── StudentManagementApp.Test.csproj
-├── prompt_logs.txt                    # Auto-created; every Claude prompt logged here with timestamp
-└── CLAUDE.md                          # This file
+├── StudentManagementApp.Test/                 # xUnit tests — 38 tests, all passing
+│   └── StudentServiceTests.cs                 # StudentServiceTests + StudentRepositoryTests
+└── CLAUDE.md                                  # This file
 ```
 
 ---
 
-## Architecture
+## Layer Dependency Rules
 
-### Student.cs — `StudentManagementApp.Models`
-
-Domain model. All validation lives in property setters so it is enforced regardless of caller. Properties are immutable after construction except `Grade` (updated via service) and `Id` (assigned by service).
-
-| Property | Type | Setter | Validation |
-|----------|------|--------|------------|
-| `Id` | `int` | `internal set` | Assigned by `StudentService`; never user-supplied |
-| `Name` | `string` | `private set` | Letters and spaces only (`^[a-zA-Z ]+$`), 2–100 chars |
-| `Email` | `string` | `private set` | Regex-validated, stored lowercase |
-| `EnrollmentDate` | `DateTime` | `private set` | Cannot be a future date; stored as `.Date` |
-| `Grade` | `double` | `internal set` | 0–100 inclusive; only `StudentService` updates it |
-
-**Why private setters matter:** `Name`, `Email`, and `EnrollmentDate` are set only in the constructor and must never change after a student is added. Making their setters `private` prevents any external code from mutating a stored student and silently breaking service-level invariants (e.g., email uniqueness). Only `Grade` is updateable post-construction, and only through the service.
-
-**Email regex:** `^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`  
-**Name regex:** `^[a-zA-Z ]+$` — literal space only; `\s` is intentionally avoided because it matches tabs and newlines.
-
-**Constructor:** `Student(string name, string email, DateTime enrollmentDate, double grade)`  
-`Id` is NOT a constructor parameter.
-
-**`ToString()`** output format:
 ```
-[ID: 1] John Doe | john@example.com | Enrolled: 2024-09-01 | Grade: 88.5
+Presentation → Application ← Infrastructure
+                    ↓
+                  Domain
 ```
+
+- **Domain** has zero dependencies.
+- **Application** depends only on Domain. Defines interfaces; never references Infrastructure.
+- **Infrastructure** implements Application interfaces. Depends on Domain + Application.
+- **Presentation** wires everything via DI; depends on Application (interfaces) + Infrastructure (registration only).
 
 ---
 
-### IStudentService.cs — `StudentManagementApp.Services`
+## Domain Layer
 
-Interface that `Program.cs` depends on. Allows substituting implementations (e.g., JSON-backed, EF Core) without modifying `Program.cs`.
+### BaseEntity.cs — `StudentManagementApp.Domain.Entities`
+
+| Property | Type | Notes |
+|----------|------|-------|
+| `Id` | `int` | Auto-assigned by repository |
+| `CreatedOn` | `DateTime` | Set once at creation |
+| `UpdatedOn` | `DateTime` | Refreshed on every repository write |
+
+### Student.cs — `StudentManagementApp.Domain.Entities`
+
+Inherits `BaseEntity`. Plain properties with no validation — validation lives in the Application layer via FluentValidation.
+
+| Property | Type |
+|----------|------|
+| `Name` | `string` |
+| `Email` | `string` |
+| `EnrollmentDate` | `DateTime` |
+| `Grade` | `double` |
+
+---
+
+## Application Layer
+
+### StudentDto.cs
+
+DTO used across layer boundaries. Never exposes the domain entity directly. Includes `CreatedOn` for display.
+
+### IStudentService.cs
 
 ```csharp
-public interface IStudentService
-{
-    void Add(Student student);
-    IReadOnlyList<Student> GetAll();
-    Student? GetById(int id);
-    void UpdateGrade(int id, double grade);
-    void Delete(int id);
-}
+StudentDto Add(StudentDto studentDto);
+IReadOnlyList<StudentDto> GetAll();
+StudentDto? GetById(int id);
+void UpdateGrade(int id, double grade);
+void Delete(int id);
 ```
 
+### IStudentRepository.cs
+
+```csharp
+void Add(Student student);
+IReadOnlyList<Student> GetAll();
+Student? GetById(int id);
+void Update(Student student);
+void Delete(int id);
+bool EmailExists(string email, int? excludeId = null);
+```
+
+### StudentValidator.cs (FluentValidation)
+
+| Field | Rule |
+|-------|------|
+| Name | Required, 3–100 chars |
+| Email | Required, valid email format |
+| Grade | 0–100 inclusive |
+| EnrollmentDate | Cannot be a future date |
+
+### StudentMappingProfile.cs (AutoMapper)
+
+- `Student → StudentDto` — all properties mapped automatically.
+- `StudentDto → Student` — `Id`, `CreatedOn`, `UpdatedOn` ignored (prevents callers from forging audit data).
+
+### StudentService.cs
+
+Orchestrates validation → email uniqueness check → repository call. Logging via `ILogger<StudentService>`.
+
+| Method | Guards | Exception |
+|--------|--------|-----------|
+| `Add` | FluentValidation + duplicate email | `ValidationException` / `InvalidOperationException` |
+| `GetById` | `id ≤ 0` | `ArgumentException` |
+| `UpdateGrade` | `id ≤ 0`, `grade` out of 0–100 | `ArgumentException`; `KeyNotFoundException` if not found |
+| `Delete` | `id ≤ 0` | `ArgumentException`; `KeyNotFoundException` if not found |
+
 ---
 
-### StudentService.cs — `StudentManagementApp.Services`
+## Infrastructure Layer
 
-Implements `IStudentService`. Holds `private readonly List<Student> _students` as in-memory storage. Uses `private int _nextId = 1` to auto-increment IDs.
+### StudentRepository.cs
 
-| Method | Behaviour |
-|--------|-----------|
-| `Add(Student)` | Validates non-null + unique email, assigns `Id`, appends to list |
-| `GetAll()` | Returns `IReadOnlyList<Student>` (read-only collection view) |
-| `GetById(int id)` | Throws `ArgumentException` for `id ≤ 0`; returns `Student?` (null if not found) |
-| `UpdateGrade(int id, double grade)` | Guards `id ≤ 0` directly; throws `KeyNotFoundException` if not found |
-| `Delete(int id)` | Guards `id ≤ 0` directly; throws `KeyNotFoundException` if not found |
+In-memory `List<Student>`. Auto-increments `_nextId` starting at 1. IDs are never reused after deletion — gaps are expected. `EmailExists` supports an `excludeId` parameter for update scenarios.
 
-**Exception contract:**
-- `id ≤ 0` → `ArgumentException` (thrown by the method itself, not delegated to `GetById`)
-- Valid id not found → `KeyNotFoundException`
-- Duplicate email on Add → `InvalidOperationException`
+### FileLogger / FileLoggerProvider
 
-`Delete` and `UpdateGrade` each validate `id` directly before calling `GetById`. This ensures the exception type is consistent regardless of which internal path executes.
+Custom `ILogger` / `ILoggerProvider` that appends structured log lines to `Logs/application-log.txt`.  
+Format: `[yyyy-MM-dd HH:mm:ss] [LogLevel] Message`
 
-**ID rules:** Auto-generated, sequential, positive. IDs are NOT re-assigned after a delete — gaps are expected.
+### PromptLogger
+
+Implements `IPromptLogger`. Appends every user-initiated action to `Logs/prompts.txt`.  
+Format: `---\n[timestamp]\nprompt text`
+
+Both loggers use `private static readonly Lock _fileLock` for thread safety.
+
+### InfrastructureServiceRegistration.cs
+
+`AddInfrastructure(services, logFilePath, promptLogFilePath)` extension method registers:
+- `IStudentRepository` → `StudentRepository` (Singleton — in-memory list must survive across calls)
+- `IStudentService` → `StudentService` (Scoped)
+- AutoMapper with `StudentMappingProfile`
+- FluentValidation `IValidator<StudentDto>` → `StudentValidator`
+- `IPromptLogger` → `PromptLogger` (Singleton)
+- Logging: Console + `FileLoggerProvider`
 
 ---
 
-### Program.cs — `StudentManagementApp`
+## Presentation Layer
 
-`_service` is typed as `IStudentService` (not the concrete class). Single `Main()` loop. All exceptions are caught and printed; the loop continues.
+### Program.cs
+
+DI container built via `ServiceCollection` + `AddInfrastructure()`. `_service` typed as `IStudentService` (never the concrete class). `_promptLogger` logs every menu action.
 
 **Menu options:**
 1. Add Student
@@ -132,49 +204,85 @@ Implements `IStudentService`. Holds `private readonly List<Student> _students` a
 5. Delete Student
 6. Exit
 
-**Input helper methods** (all loop until valid input is given):
+**Input helper methods** (all loop until valid input):
 
 | Method | Validates |
 |--------|-----------|
-| `ReadName(prompt)` | Letters/spaces only, 2–100 chars |
-| `ReadEmail(prompt)` | Regex email format |
-| `ReadGrade(prompt)` | Double 0–100, `CultureInfo.InvariantCulture` |
-| `ReadDate(prompt)` | `yyyy-MM-dd` format via `CultureInfo.InvariantCulture`, not future |
-| `ReadInt(prompt)` | Positive integer |
+| `ReadName` | Letters/spaces only, 3–100 chars |
+| `ReadEmail` | Email regex format |
+| `ReadGrade` | Double 0–100, `InvariantCulture` |
+| `ReadDate` | `yyyy-MM-dd`, not future, `InvariantCulture` |
+| `ReadInt` | Positive integer |
 
-**EOF handling:** All helpers call `ExitOnEof()` when `Console.ReadLine()` returns `null` (piped stdin, closed stream). This calls `Environment.Exit(0)` with a message instead of spinning in an infinite loop.
-
-**Culture:** All numeric and date parsing uses `CultureInfo.InvariantCulture` explicitly to avoid locale-dependent failures (e.g., comma vs. dot decimal separators on European locales).
-
----
-
-## Validation Rules
-
-| Field | Rule | Error message |
-|-------|------|---------------|
-| Name | Letters and single spaces only (`^[a-zA-Z ]+$`) | "Name must contain letters only (no digits or special characters)." |
-| Name | 2–100 characters | "Name must be between 2 and 100 characters." |
-| Email | Must match email regex | "Email format is invalid (e.g. user@example.com)." |
-| Email | Must be unique per student | "A student with email '...' already exists." |
-| EnrollmentDate | Cannot be future | "Enrollment date cannot be a future date." |
-| EnrollmentDate | Format `yyyy-MM-dd` | "Invalid format. Use yyyy-MM-dd (e.g., 2024-09-01)." |
-| Grade | 0–100 inclusive | "Grade must be between 0 and 100." |
+**EOF handling:** All helpers call `ExitOnEof()` when `Console.ReadLine()` returns `null`.
 
 ---
 
 ## Tests — `StudentManagementApp.Test`
 
-**30 tests, all passing.** Framework: xUnit 2.9.3, pattern: Arrange / Act / Assert.
+**38 tests, all passing.** Framework: xUnit 2.9.3 + Moq 4.20, pattern: Arrange / Act / Assert.
 
-| Group | Count | Covers |
+| Class | Count | Covers |
 |-------|-------|--------|
-| Add | 4 | Success, sequential IDs, duplicate email, null |
-| GetAll | 2 | Empty list, returns all |
-| GetById | 3 | Found, not found, invalid id |
-| UpdateGrade | 4 | Success, boundaries (0/100), invalid grade, missing id |
-| Delete | 3 | Removes student, removes only target, missing id |
-| Model validation | 9 | Invalid name, email, future date, grade (Theory + InlineData) |
-| Post-review additions | 5 | Tab in name, 101-char name, `Delete(0)`, `UpdateGrade(-1)`, Email immutability |
+| `StudentServiceTests` | 27 | Service-level tests using mocked `IStudentRepository` |
+| `StudentRepositoryTests` | 11 | Repository-level integration tests against real in-memory store |
+
+### StudentServiceTests groups
+
+| Group | Tests |
+|-------|-------|
+| Add — success | Valid student calls repo and returns DTO |
+| Add — validation | Short name, invalid email, future date, grade > 100 |
+| Add — duplicate email | Throws `InvalidOperationException`; `Add` never called |
+| Add — call order | `EmailExists` runs before `Add` |
+| GetAll | Empty list, returns all mapped DTOs |
+| GetById | Found, not found, invalid id (`ArgumentException`) |
+| UpdateGrade | Success, boundary grades (0/100), invalid grade, missing id, invalid id |
+| Delete | Success, missing id, invalid id |
+
+### StudentRepositoryTests groups
+
+| Group | Tests |
+|-------|-------|
+| Add & GetAll | Sequential IDs from 1, multiple students, empty list |
+| GetById | Found, not found |
+| Update | Replaces in list |
+| Delete | Removes from list, IDs not reused after delete |
+| EmailExists | Existing, non-existing, excludeId for owner |
+
+---
+
+## NuGet Packages
+
+| Package | Version | Used in |
+|---------|---------|---------|
+| AutoMapper | 12.0.1 | Application, Infrastructure, Test |
+| AutoMapper.Extensions.Microsoft.DependencyInjection | 12.0.1 | Infrastructure |
+| FluentValidation | 11.10.0 | Application, Infrastructure, Presentation, Test |
+| FluentValidation.DependencyInjectionExtensions | 11.10.0 | Infrastructure |
+| Microsoft.Extensions.DependencyInjection | 9.0.6 | Infrastructure, Presentation |
+| Microsoft.Extensions.Logging | 9.0.6 | Infrastructure |
+| Microsoft.Extensions.Logging.Abstractions | 9.0.6 | Application, Test |
+| Microsoft.Extensions.Logging.Console | 9.0.6 | Infrastructure |
+| xUnit | 2.9.3 | Test |
+| Moq | 4.20.72 | Test |
+
+> **Note:** AutoMapper 12.0.1 has a known vulnerability (GHSA-rvv3-g6hj-g44x) flagged as NU1903. No v13 of `AutoMapper.Extensions.Microsoft.DependencyInjection` exists yet. The vulnerability is in mapping profiles using `UseDestinationValue` — not exercised here. Safe to leave as-is for a learning project.
+
+---
+
+## Design Decisions
+
+- **4-layer architecture** — Domain / Application / Infrastructure / Presentation. Each layer depends only inward; Presentation never references concrete infrastructure types.
+- **DTOs cross layer boundaries** — `Program.cs` and tests work with `StudentDto`, never with `Student` directly. This decouples the UI from the domain model.
+- **AutoMapper** — bidirectional mapping in `StudentMappingProfile`. `Id`, `CreatedOn`, `UpdatedOn` are ignored on `StudentDto → Student` to prevent callers from forging audit data.
+- **FluentValidation** — rules live in `StudentValidator`, executed by `StudentService` before any repository call. Keeps domain entity clean (no validation attributes).
+- **Repository pattern** — `IStudentRepository` defined in Application; `StudentRepository` lives in Infrastructure. Swapping to EF Core or JSON requires only a new Infrastructure implementation.
+- **Singleton repository** — `StudentRepository` registered as Singleton because the in-memory list must survive across scoped service resolutions.
+- **Thread-safe loggers** — both `FileLogger` and `PromptLogger` use `private static readonly Lock _fileLock` so concurrent log writes don't interleave.
+- **`IReadOnlyList<T>` from GetAll** — prevents callers from mutating the internal collection.
+- **`CultureInfo.InvariantCulture`** — all numeric and date parsing uses `InvariantCulture` to avoid locale-dependent failures.
+- **`ExitOnEof()`** — when `Console.ReadLine()` returns `null` (piped stdin), helpers call `Environment.Exit(0)` instead of looping forever.
 
 ---
 
@@ -185,56 +293,22 @@ Configured in `.claude/settings.json`.
 **Event:** `UserPromptSubmit`  
 **Effect:** Every prompt submitted in this Claude Code session is appended to `prompt_logs.txt`.
 
-**Log format:**
-```
-[2026-06-18 15:32:42] your prompt text here
-```
-
-Runs asynchronously (`"async": true`) — never blocks the session. To disable: open `/hooks` in Claude Code and toggle off.
-
----
-
-## Design Decisions
-
-- **No database** — `List<Student>` in-memory; data resets on each run. Intentional for this exercise.
-- **`IStudentService` interface** — `Program._service` is typed as `IStudentService`, not `StudentService`. Enables substitution (JSON, EF Core) and mocking in tests without modifying `Program.cs`.
-- **Private setters on immutable fields** — `Name`, `Email`, `EnrollmentDate` are `private set`. This prevents any external code from mutating a stored student and silently breaking the email-uniqueness invariant that `Add()` enforces. Only `Grade` is `internal set` (updateable by the service) and `Id` is `internal set` (assigned by the service).
-- **Id guards in `Delete` / `UpdateGrade`** — Both methods validate `id ≤ 0` directly before calling `GetById`. This ensures callers always get `ArgumentException` for invalid IDs and `KeyNotFoundException` for valid-but-missing IDs — the exception type is predictable without reading internal code.
-- **`CultureInfo.InvariantCulture`** — All `double.TryParse` and `DateTime.TryParseExact` calls specify `InvariantCulture`. Without this, the app silently fails on non-English locales (comma decimal separator, non-Gregorian calendar systems).
-- **`ExitOnEof()`** — When `Console.ReadLine()` returns `null` (piped stdin), all helpers call `Environment.Exit(0)` rather than looping forever. `null` is a sentinel for "stream closed", not bad user input.
-- **Literal space in name regex** — `^[a-zA-Z ]+$` uses a literal space, not `\s`. In .NET, `\s` matches tab, newline, carriage return, and other control characters. A tab-containing name would pass `\s`-based validation silently.
-- **`IReadOnlyList<Student>` from `GetAll()`** — Prevents callers from adding/removing items from the collection. Combined with private setters, stored student objects are fully protected from external mutation.
-- **No partial updates** — Only grade can be updated post-creation. To change name/email, delete and re-add.
-
 ---
 
 ## Extending This Project
 
-### Add persistence (JSON file)
-- Add `IStudentRepository` interface
-- Implement `JsonStudentRepository` using `System.Text.Json`
-- Inject into `StudentService` via constructor
-- `Program.cs` stays unchanged — it only knows `IStudentService`
+### Swap in-memory store for JSON file persistence
+- Add `IStudentRepository` is already defined — implement `JsonStudentRepository` using `System.Text.Json`
+- Register it in `InfrastructureServiceRegistration` in place of `StudentRepository`
+- `Program.cs` and `StudentService` stay unchanged
 
-### Add sorting/filtering to `GetAll()`
-```csharp
-public IReadOnlyList<Student> GetAll(string? sortBy = null) =>
-    sortBy switch
-    {
-        "name"  => _students.OrderBy(s => s.Name).ToList().AsReadOnly(),
-        "grade" => _students.OrderByDescending(s => s.Grade).ToList().AsReadOnly(),
-        _       => _students.AsReadOnly()
-    };
-```
+### Add EF Core persistence
+- Implement `EfStudentRepository : IStudentRepository`
+- Add a `DbContext` in Infrastructure
+- `Program.cs` stays unchanged
 
-### Add `UpdateEmail` to the service
-If email updates are ever needed, they must go through the service (not via `student.Email =`) so the uniqueness check runs:
+### Add sorting to `GetAll()`
 ```csharp
-public void UpdateEmail(int id, string newEmail)
-{
-    if (_students.Any(s => s.Id != id && s.Email == newEmail.Trim().ToLower()))
-        throw new InvalidOperationException($"Email '{newEmail}' is already in use.");
-    var student = GetById(id) ?? throw new KeyNotFoundException(...);
-    // Email setter is private — use reflection or expose an internal method
-}
+// In IStudentService / StudentService
+IReadOnlyList<StudentDto> GetAll(string? sortBy = null);
 ```

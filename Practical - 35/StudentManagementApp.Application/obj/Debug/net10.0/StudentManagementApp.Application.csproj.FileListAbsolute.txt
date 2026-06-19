@@ -1,0 +1,16 @@
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\bin\Debug\net10.0\StudentManagementApp.Application.deps.json
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\bin\Debug\net10.0\StudentManagementApp.Application.dll
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\bin\Debug\net10.0\StudentManagementApp.Application.pdb
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\bin\Debug\net10.0\StudentManagementApp.Domain.dll
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\bin\Debug\net10.0\StudentManagementApp.Domain.pdb
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.csproj.AssemblyReference.cache
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.AssemblyInfoInputs.cache
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.AssemblyInfo.cs
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.csproj.CoreCompileInputs.cache
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.sourcelink.json
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentM.89F5E6EA.Up2Date
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.dll
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\refint\StudentManagementApp.Application.dll
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\StudentManagementApp.Application.pdb
+C:\Users\shivang.chauhan\Desktop\Dot Net\Claude AI\Practicals\Practical - 35\Practical - 35\StudentManagementApp.Application\obj\Debug\net10.0\ref\StudentManagementApp.Application.dll
